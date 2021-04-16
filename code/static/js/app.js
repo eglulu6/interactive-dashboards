@@ -22,6 +22,11 @@ d3.json("data/samples.json").then((importedData) =>
 
     /***************** Filter data by selected ID ***************************************/
         
+    // load inital patient
+    var selectedID = dropdown.property("value");
+    console.log(selectedID)
+    
+    
     //select the dropdown and set an action on event
     dropdown.on("change", handleSelect);
 
@@ -160,17 +165,17 @@ d3.json("data/samples.json").then((importedData) =>
 
         /***************** creating demographics table **************************/
 
-        console.log(filteredMetaInfo)
+        let keys = Object.keys(filteredMetaInfo[0])
+        const metadata = d3.select('#sample-metadata')
+        
+        metadata.html("")
 
-        var demographics = d3.select('#sample-metadata')
-        demographics.append('p').text(`ID: ${filteredMetaInfo[0].id}`);
-        demographics.append('p').text(`Ethnicity: ${filteredMetaInfo[0].ethnicity}`);
-        demographics.append('p').text(`Gender: ${filteredMetaInfo[0].gender}`);
-        demographics.append('p').text(`Age: ${filteredMetaInfo[0].age}`);
-        demographics.append('p').text(`Location: ${filteredMetaInfo[0].location}`);
-        demographics.append('p').text(`BBtype: ${filteredMetaInfo[0].bbtype}`);
-        demographics.append('p').text(`Wfreq: ${filteredMetaInfo[0].wfreq}`);
-
+        keys.forEach(key => 
+        {
+            console.log(key)        
+            console.log(filteredMetaInfo[0][key])
+            metadata.append('p').text(`${key}: ${filteredMetaInfo[0][key]}`)
+        })
 
     } //handleEvent Function end
 
